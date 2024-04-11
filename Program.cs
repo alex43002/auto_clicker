@@ -9,13 +9,13 @@ namespace mouse_clicker_app
         {
             Console.WriteLine("Welcome to Mouse Clicker App!");
             Console.WriteLine("Enter X coordinate:");
-            int xCoord = int.Parse(Console.ReadLine());
+            int.TryParse(Console.ReadLine(), out int xCoord);
 
             Console.WriteLine("Enter Y coordinate:");
-            int yCoord = int.Parse(Console.ReadLine());
+            int.TryParse(Console.ReadLine(), out int yCoord);
 
             Console.WriteLine("Enter number of clicks:");
-            int clickCount = int.Parse(Console.ReadLine());
+            int.TryParse(Console.ReadLine(), out int clickCount);
 
             SimulateMouseClick(xCoord, yCoord, clickCount);
 
