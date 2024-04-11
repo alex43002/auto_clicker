@@ -1,17 +1,41 @@
 ﻿using System;
 using WindowsInput;
-
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 namespace mouse_clicker_app
 {
     class Program
     {
+        [DllImport("user32.dll")]
+        static extern bool GetCursorPos(out POINT lpPoint);
+
+        struct POINT
+        {
+            public int X;
+            public int Y;
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Mouse Clicker App!");
 
-            // Get input from the user
-            int xCoord = GetUserInput("Enter X coordinate:");
-            int yCoord = GetUserInput("Enter Y coordinate:");
+            // Capture cursor position when the user clicks down
+            Console.WriteLine("Click down anywhere on the screen to select the location.");
+
+            POINT cursorPosition;
+            while (!GetCursorPos(out cursorPosition))
+            {
+                // Wait for the user to click down
+                System.Threading.Thread.Sleep(100);
+            }
+
+            // Extract cursor position and normalize to current screen
+            int xCoord = cursorPosition.X * UInt16.MaxValue / Screen.PrimaryScreen.Bounds.Width;
+            int yCoord = cursorPosition.Y * UInt16.MaxValue / Screen.PrimaryScreen.Bounds.Height;
+
+            Console.WriteLine($"Selected location: X = {xCoord}, Y = {yCoord}");
+
+            // Get number of clicks
             int clickCount = GetUserInput("Enter number of clicks:");
 
             // Simulate mouse clicks
@@ -29,6 +53,7 @@ namespace mouse_clicker_app
                 Console.WriteLine(prompt);
                 if (int.TryParse(Console.ReadLine(), out input))
                 {
+                    Console.WriteLine("Input :" + input);
                     return input;
                 }
                 else
