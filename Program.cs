@@ -19,6 +19,10 @@ namespace mouse_clicker_app
         {
             Console.WriteLine("Welcome to Mouse Clicker App!");
 
+             // Prompt the user to press a key to initiate the mouse click simulation
+            Console.WriteLine("Press any key to select the cursor location and simulate mouse clicks...");
+            Console.Read();
+
             // Capture cursor position when the user clicks down
             Console.WriteLine("Click down anywhere on the screen to select the location.");
 
